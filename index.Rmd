@@ -1,5 +1,5 @@
 ---
-title: "Medication extraction annotation guide"
+title: "Medication extraction annotation guide for french clinical texts"
 author: "Jouffroy Jordan, Feldman Sarah and Neuraz Antoine"
 date: "6/6/2019"
 ---

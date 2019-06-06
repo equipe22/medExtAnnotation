@@ -5,6 +5,9 @@ navbar:
   left:
     - text: "Annotation guide"
       href: index.html
+  right:
+    - icon: fa-github fa-lg
+      href: https://github.com/equipe22/medExtAnnotation
 output:
   html_document:
     theme: cosmo

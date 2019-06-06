@@ -2,7 +2,12 @@
 title: "Annotation guideline for medication extraction from french electronic health records"
 author: "Jouffroy Jordan, Feldman Sarah and Neuraz Antoine"
 date: "6/6/2019"
-output: html_document
+output: 
+  html_document: 
+    keep_md: yes
+    number_sections: yes
+    toc: yes
+    toc_depth: 1
 ---
 
 # Overview :

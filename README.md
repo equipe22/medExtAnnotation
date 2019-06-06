@@ -699,22 +699,4 @@ A1 certainty T109 uncertain
 
 
 
-Doubts :
-
-Alimentation entérale = class ( /crs/samp\_sarah\_35/cr00414)
-
-antibiotique = class ( /crs/samp\_sarah\_35/cr00414)
-
-rajouter dans drug includes : prophylaxie anti-
-
-rajouter dans drugs : annoter même quand faute d'orthographe
-
-rajouter dans drugs : o2
-
-surfactant = class? (/crs/samp\_sarah\_35/cr02870)
-
-rajouter dans class others : famille d'antiobitque (ex : fluoroquinolone, C3G...)
-
-rajouter dans dru inclusion : Si nom de drug au sein d'un dosage, catcher drug
-
 [^1]: Pontus Stenetorp, Sampo Pyysalo, Goran Topić, Tomoko Ohta, Sophia Ananiadou and Jun'ichi Tsujii (2012). brat: a Web-based Tool for NLP-Assisted Text Annotation. In _Proceedings of the Demonstrations Session at EACL 2012_.

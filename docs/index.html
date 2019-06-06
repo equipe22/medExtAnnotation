@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Jouffroy Jordan, Feldman Sarah and Neuraz Antoine" />
+
+
+<title>Medication extraction annotation guide</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Medication extraction annotation guide</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Annotation guide</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Medication extraction annotation guide</h1>
+<h4 class="author">Jouffroy Jordan, Feldman Sarah and Neuraz Antoine</h4>
+<h4 class="date">6/6/2019</h4>
+
+</div>
+
+
+<div id="overview" class="section level1">
+<h1>Overview :</h1>
+<p>This Guideline is done to help and give standard method of annotation for medication extraction from french electronic health records. It’s strongly inspired from Preliminary Annotation Guidelines of the i2b2 Medication Extraction Challenge of 2009. For each patient report provided, the goal is to extract information about all of the medications that are known to be taken by the patient or related with him. Some of the medications are provided in semi-structured (list) form, e.g., sections labeled as “medications on admission” or “medications at discharge”. The final output of medications of the patient should include these; however, the real interest is in extracting medications that are mentioned in the narratives of records.</p>
+<p>The input of the medication annotation will be discharges summaries of Electronics Health records, pre annotated by a rule based system. The annotation will be done with “brat”<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Those discharges are free text.</p>
+<p>The output created from these annotations will be a list of medications and their informations. For each listed medication, the following information needs to be annotated if missing or corrected if false in the pre annotation :</p>
+<ol style="list-style-type: decimal">
+<li>medication name (or drug class)</li>
+<li>dosage</li>
+<li>frequency</li>
+<li>duration</li>
+<li>mode/route of administration</li>
+<li>condition</li>
+<li>event</li>
+<li>attributes</li>
+<li>prescription patterns</li>
+</ol>
+<p>Each entity can be annotate by attribute markers :</p>
+<ol style="list-style-type: decimal">
+<li>Duration and Event entity will be marked by temporal attribute(past, present, futur). If it’s missing, “present” will be considered by default as temporal attribute.</li>
+<li>All of the entity will be marked by certainty attribute (factual, suggested, conditional, uncertain, negated, contraindicated). If it’s missing, “factual” will be considered by default as certainty attribute.</li>
+<li>For all of the listed medications, the patient will be considered as experiencer by default. If it’s not the case, precise it : family if it concerns patients family, “other” otherwise (notice, dosage…)</li>
+</ol>
+<p>Annotations must be done even if there are spelling mistakes, unless those spelling mistakes could induce confusion.</p>
+<p>In this document, accents and some punctuation signs have been removed from french example sentences to agree with our first study on extraction of medication informations.</p>
+</div>
+<div id="medication" class="section level1">
+<h1>Medication:</h1>
+<p>All Medications listed in discharge summary and given (present, past or future) or contraindicated to an experiencer.</p>
+<div id="what-should-be-annotated" class="section level2">
+<h2>What should be annotated?</h2>
+<p>Drug name, generics, class of medication or substance</p>
+<p>Medications include:</p>
+<ul>
+<li>Prescription substances:
+<ul>
+<li>Brand name medications, e.g., <em>doliprane</em></li>
+<li>Generics , e.g.,* paracetamol*</li>
+<li>Ingredients, e.g., <em>furosemide</em></li>
+<li>Collective name for a group of medications, e.g., <em>corticoïdes</em> (it will be annotated as a drug class)</li>
+</ul></li>
+<li>Over the counter medications:
+<ul>
+<li>Brand names, e.g., <em>Aspirine</em></li>
+<li>Ingredients, e.g., <em>vitamine D</em></li>
+<li>Collective name for a group of medications, e.g, <em>vitamines</em> (it will be annotated as a drug class)</li>
+</ul></li>
+<li>Biological substances required or suggested by doctors
+<ul>
+<li>Ingredients in total parenteral nutrition if listed individually</li>
+<li>Components of IV fluid and saline listed (including “eau minerale” and “serum physiologique”)</li>
+<li>Debit glucidique</li>
+</ul></li>
+<li>Substance therapy , e.g., <em>Corticothérapie</em> or <em>traitement antiretroviral</em> (it will be annotated as a drug class)</li>
+</ul>
+<p>Medications exclude:</p>
+<ul>
+<li>Food and Water not used as treatment</li>
+<li>Diet</li>
+<li>Tobacco</li>
+<li>Alcohol</li>
+<li>Illicit drugs</li>
+<li>medical device , e.g., Pompe à Insuline (even if a drug is in)</li>
+<li>transfusion</li>
+</ul>
+<p>Class include :</p>
+<ul>
+<li>“therapie”
+<ul>
+<li>oxygenotherapie</li>
+<li>corticotherapie</li>
+<li>antibiotherapie</li>
+<li>antibiotique</li>
+</ul></li>
+<li>“traitement anti-” with or without “traitement” before
+<ul>
+<li>traitement antalgique</li>
+<li>traitement antiretroviral</li>
+<li>antihypertenseur</li>
+<li>vaccination antigrippal</li>
+<li>antifongique</li>
+</ul></li>
+<li>chemotherapy protocol
+<ul>
+<li>abvd</li>
+</ul></li>
+<li>others
+<ul>
+<li>vaccination contre l’hepatite b/meningocoque…</li>
+<li>nutrition (if used as treatment)
+<ul>
+<li>“orale/parentérale/entérale”
+<ul>
+<li>include medication name</li>
+<li>unless there is a distinction between them “nutrition orale mais pas enterale”</li>
+</ul></li>
+<li>regime d’urgence</li>
+</ul></li>
+<li>complement nutritionnel</li>
+</ul></li>
+<li>acronyme
+<ul>
+<li>np (for nutrition parenterale)</li>
+<li>avk (for anti-vitamine K)</li>
+<li>o2</li>
+<li>vit-d</li>
+</ul></li>
+</ul>
+<p>Class exclude:</p>
+<p>“traitement” without precision</p>
+<ul>
+<li>traitement prophylactique</li>
+<li>traitement pour son asthme</li>
+</ul>
+<p>action followed by “par”</p>
+<ul>
+<li>sedation</li>
+<li>(re)hydratation</li>
+<li>antibioprophylaxie</li>
+</ul>
+<p>class included in medical device</p>
+<p>To annotate medications, the text has to include an explicit statement indicating that the patient either took this medication, is taking the medication, is prescribed the medication, is suggested to take the medication, had side effect taking the medication or can’t take it because of contraindication.</p>
+<p>For medication suggested or uncertain, a certainty attribute“suggested”/“uncertain” must be add. For medication not taken or not given, a certainty attribute “negated” must be add (relation on a negated drug can be annotate, e.g., relation between avk and duration must be annotate for “pas d’avk pendant 2 jours”). For medication mentioned as a contraindication, a certainty “contraindicated” must be annotate. If medications concerned other people, it must be annotated with an experiencer attribute (“family”/“other”).</p>
+</div>
+<div id="how-to-annotate" class="section level2">
+<h2>How to annotate ?</h2>
+<p>Annotate the complete noun phrase that correspond to the name of the medication, e.g., amoxicilline acide clavulanique. Annotation must be done even if there are spelling mistakes. Don’t Include words such as “injectable”, “creme”, “nebuliseur”, “solution” as part of the medication name even when they appear immediately after the medication name, e.g., selenium injectable, xylocaïne nebuliseur. Don’t include numeric informations as part of the medication, e.g., renutril 500 unless it concerns a kind of the substance, e.g., iodure 131</p>
+<p>Pronouns that refer to a drug, mustn’t be included, but its attributes are related with the element referred.</p>
+<div id="examples" class="section level3">
+<h3>Examples :</h3>
+<ul>
+<li><em>amlor : 10 mg le matin</em>
+<ul>
+<li>drug : <em>amlor</em></li>
+</ul></li>
+<li><em>ialuset plus creme</em>
+<ul>
+<li>drug : <em>ialuset plus</em></li>
+<li>(creme not included in drug name)</li>
+</ul></li>
+<li><em>sevrage de l oxygenotherapie en fevrier 2013</em>
+<ul>
+<li>class : <em>oxygenotherapie</em></li>
+</ul></li>
+<li><em>grand-mere maternelle : diabete de type 2 a 61 ans, sans surpoids, traitee par insuline</em>
+<ul>
+<li>drug : <em>insuline</em>
+<ul>
+<li>experiencer : family</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Each co reference of a medication (class or drug name) or its generics, including with spelling istakes, in the same sentence, must be annotated.</p>
+<ul>
+<li><em>doliprane 1 dose poids*4/ jour si douleurs (paracetamol 1 boite)</em>
+<ul>
+<li>drug : <em>doliprane</em></li>
+<li>drug : <em>paracetamol</em></li>
+</ul></li>
+<li><em>(matin : 9-12 ui novorapid(1), 20 ui levemir(1), dans les 4 zones.</em> <em>(gouter : 5-7 ui novorapid(2).</em> <em>(soir : 6-8 ui novorapid(3), 15 ui levemir(2), dans les 4 zones.</em>
+<ul>
+<li>drug : <em>novorapid(1)</em></li>
+<li>drug : <em>levemir(1)</em></li>
+<li>drug : <em>novorapid(2)</em></li>
+<li>drug : <em>novorapid(3)</em></li>
+<li>drug : <em>levemir(2)</em></li>
+</ul></li>
+</ul>
+<p>If a drug is written as medication and a class in the same sentence, annotate both (as a class and as a drug). Medication association with class in the same sentence results of one annotation “drug” by medication :</p>
+<ul>
+<li><em>relais par avk au cours de l’hospitalisation (coumadine)</em>
+<ul>
+<li>drug : <em>coumadine</em>
+<ul>
+<li>is_part_of : <em>avk</em></li>
+</ul></li>
+<li>class : <em>avk</em></li>
+</ul></li>
+<li><em>un traitement antiretroviral a ete debute (truvada, reyataz et norvir avec une charge virale…)</em>
+<ul>
+<li>class : <em>traitement antiretroviral</em></li>
+<li>drug : <em>truvada</em></li>
+<li>drug : <em>reyataz</em></li>
+<li>drug : <em>norvir</em></li>
+</ul></li>
+</ul>
+<p>Medication enumeration sharing a word must be annotated together :</p>
+<ul>
+<li><em>vitamine C , D , A , and E</em>
+<ul>
+<li>drug : <em>vitamine C , D , A , and E</em></li>
+</ul></li>
+</ul>
+<p>But :</p>
+<ul>
+<li><em>une dose de vitamine C et vitamine D</em>
+<ul>
+<li>drug : <em>vitamine C</em></li>
+<li>drug : <em>vitamine D</em></li>
+</ul></li>
+</ul>
+<p>Annotate drugs name even if their attributes are negated</p>
+<ul>
+<li><em>pas de necessite de doublement des doses d hydrocortisone</em>
+<ul>
+<li>drug : <em>hydrocortisone</em></li>
+<li>don’t annotate “doublement des doses”</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="dosage" class="section level1">
+<h1>Dosage :</h1>
+<p>The amount of a single medication used in each administration, e.g., <em>un comprimé, une dose, 30 mg</em>.</p>
+<div id="what-should-be-annotated-1" class="section level2">
+<h2>What should be annotated?</h2>
+<p>The numeric and/or the textual information that mark the amount and the unit of administration of a medication used in a single administration. Annotate relation with the drug concerned by a link from dosage to drug name</p>
+<p>Includes (not exhaustive):</p>
+<ul>
+<li>1 cp</li>
+<li>un comprimé</li>
+<li>0.4 mg</li>
+<li>0.5 m.g.</li>
+<li>100 mg/kg</li>
+<li>une dose kilo</li>
+<li>100 mg x 2 comprimés</li>
+<li>500 mg : 2 gelules</li>
+<li>4000 ui / 0,4</li>
+<li>1 sachet</li>
+<li>2 cuillère-mesure</li>
+<li>deux bouffées</li>
+<li>3 bolus</li>
+<li>double dose</li>
+<li>[renutril] 500</li>
+</ul>
+<p>Exclude:</p>
+<p>if dose is negated and drug is given, e.g., don’t annotate dose ,</p>
+<ul>
+<li>don’t annotate “doublement des doses” for “pas de necessite de doublement des doses d hydrocortisone”</li>
+</ul>
+<p>Cumulative dosages (because too much variability in the meaning):</p>
+<ul>
+<li>3 boites</li>
+</ul>
+</div>
+<div id="how-to-annotate-1" class="section level2">
+<h2>How to annotate?</h2>
+<p>Annotate all mentioned dosages of all medications present in the discharge summary and their relation with it even if it is part of the medication name.</p>
+<ul>
+<li><em>speciafoldine 5mg 10 jours par mois</em>
+<ul>
+<li>Dosage : <em>5mg</em></li>
+</ul></li>
+<li><em>oracilline 500mui x 2 par jour.</em>
+<ul>
+<li>Dosage : <em>500mui</em></li>
+</ul></li>
+<li><em>depakine 500 x 3 par jour</em>
+<ul>
+<li>Dosage : <em>500</em></li>
+</ul></li>
+<li><em>vitabact 0,05 % : x4/jour dans chaque oeil pendant 10 jours</em>
+<ul>
+<li>Dosage: <em>0,05 %</em></li>
+</ul></li>
+</ul>
+<p>Annotate all the partial dosage as “Dosage”</p>
+<ul>
+<li><em>hydrea 500mg un jour sur 2, 1000mg un jour sur 2</em>.
+<ul>
+<li>Dosage : <em>500mg</em></li>
+<li>Dosage : <em>1000mg</em></li>
+</ul></li>
+<li><em>hydrocortisone : 7,5 mg le matin, 5 mg le soir (12,5 mg/m²/jour )</em>
+<ul>
+<li>Dosage : <em>7,5 mg</em></li>
+<li>Dosage : <em>5 mg</em></li>
+<li>Dosage : <em>12,5mg/m²</em></li>
+</ul></li>
+</ul>
+<p>Annotate different ways of referring to the same dosage in separate entries:</p>
+<ul>
+<li><em>sandostatine : 100µg/8h en sc soit 50µg/kg/j</em>
+<ul>
+<li>Dosage : <em>100µg</em></li>
+<li>Dosage : <em>50µg/kg</em></li>
+</ul></li>
+</ul>
+<p>Annotate immediately adjacent part of a dosage in seperate entry :</p>
+<ul>
+<li><em>seretide 50 deux bouffeesx2/j</em>
+<ul>
+<li>Dosage : <em>50 deux bouffees</em></li>
+</ul></li>
+<li><em>singulair 1 sachet de 4mg/jour,</em>
+<ul>
+<li>Dosage : <em>1 sachet de 4mg</em></li>
+</ul></li>
+</ul>
+<p>Annotate a range of dosage as one entry. In this example, there is multiple dosage for the same drug but in different sentence:</p>
+<ul>
+<li><em>matin : 5 a 8 ui novorapid.</em> <em>midi : 5 a 8 ui novorapid.</em> <em>gouter : 3 a 4 1/2 ui novorapid.</em> <em>soir : 3 a 6 ui novorapid.</em>
+<ul>
+<li>Dosage : <em>5 a 8 ui</em></li>
+<li>Dosage : <em>5 a 8 ui</em></li>
+<li>Dosage : <em>3 a 4 1/2 ui</em></li>
+<li>Dosage : <em>3 a 6 ui</em></li>
+</ul></li>
+</ul>
+<p>Annotate only one pattern (ordonnance prescription) for all drug when dosage concerned both :</p>
+<ul>
+<li><em>doliprane et ibuprofene, 1 comprime toutes les 6 heures chacun</em>
+<ul>
+<li>Dosage : <em>1 comprime</em></li>
+<li>Ordonnance_prescription_start : <em>doliprane et ibuprofene, 1 comprime</em></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="frequency" class="section level1">
+<h1>Frequency</h1>
+<p>Terms, phrases, or abbreviations that describe how often each dose of the medication should be taken.</p>
+<div id="what-should-be-annotated-2" class="section level2">
+<h2>What should be annotated?</h2>
+<p>Any expression that indicates the frequency of administering a single dose of a medication should be annotated.</p>
+<p>Includes :</p>
+<p>Frequency :</p>
+<ul>
+<li>par jour</li>
+<li>toutes les 8 heures</li>
+<li>toutes les semaine</li>
+<li>/jour</li>
+<li>/j</li>
+<li>/24 heures</li>
+<li>par mois</li>
+<li>tous les soirs</li>
+<li>x 3 par jour</li>
+<li>jour (if preceded by dosage)</li>
+<li>1 - 1 - 1</li>
+<li>850 - 1000 - 1000</li>
+<li>19/03, 25/03 et 01/04/2016</li>
+<li>a J3, J5 et J7</li>
+</ul>
+<p>Temporal phrases which specify when a medication should be taken (These tend to be prepositional phrases. Preposition should be included in the extracted information):</p>
+<ul>
+<li>quotidiennement</li>
+<li>quotidien</li>
+<li>mensuel</li>
+<li>après/avant manger</li>
+<li>a 4 heures</li>
+<li>avant chaque repas</li>
+</ul>
+</div>
+<div id="how-to-annotate-2" class="section level2">
+<h2>How to annotate?</h2>
+<p>Apply the same basic principles that you use for tagging dose. Annotate each frequency even if repeated in the same sentence</p>
+<ul>
+<li>doliprane 1 dose poids*4/ jour si douleurs
+<ul>
+<li>Frequency : *4/ jour</li>
+</ul></li>
+<li>sectral : 48 mg matin et soir
+<ul>
+<li>Frequency : matin et soir</li>
+</ul></li>
+</ul>
+<p>Annotate immediately adjacent part of a frequency as one entry :</p>
+<ul>
+<li>singulair a chaque bolus : 15g a 7h et 16h30</li>
+<li>Frequency : a 7h et 16h30</li>
+</ul>
+<p>If frequency is segmented and concerns same entity, annotate the most informative part :</p>
+<ul>
+<li>speciafoldine : 1 comprime par jour, 10 jours par mois.
+<ul>
+<li>Frequency : 10 jours par mois</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="duration" class="section level1">
+<h1>Duration</h1>
+<p>A elapsed time expression that indicate for how long the medication is to be administered. Such expressions are often noun phrases, prepositional phrases, or clauses.</p>
+<div id="what-should-be-annotated-3" class="section level2">
+<h2>What should be annotated?</h2>
+<p>Expressions that describe the total time period for which the medication should be taken at a given dose. In case of medications that are stopped, the duration indicates for how long the medication has been stopped.</p>
+<p>Includes:</p>
+<p>Time expressions:</p>
+<ul>
+<li>[pendant] 10 jours</li>
+<li>[pour] un mois</li>
+<li>[durant] 2 semaines</li>
+<li>tant que nécessaire</li>
+<li>[sur] 3h</li>
+</ul>
+<p>Excludes:</p>
+<p>Time expressions that indicate when each dose should be taken. Include these under frequency.</p>
+<ul>
+<li>a prendre pendant une activité physique
+<ul>
+<li>“pendant une activite physique” is not a duration</li>
+</ul></li>
+</ul>
+<p>Time expression of starting or stopping a medication :</p>
+<ul>
+<li>dans 10 jours</li>
+<li>depuis 10 jours</li>
+</ul>
+<p>Cumulative dosages (because too much variability in the meaning):</p>
+<ul>
+<li>3 boites</li>
+</ul>
+</div>
+<div id="how-to-annotate-3" class="section level2">
+<h2>How to annotate?</h2>
+<p>Follow the same basic principles as for annotating frequency. Don’t include complete prepositional. Duration must be annotated with temporal attribute. if missing, “present” will be considered by default as temporal attribute.</p>
+<ul>
+<li>vitabact 0,05 % : x4/jour dans chaque oeil pendant 10 jours
+<ul>
+<li>Duration : 10 jours
+<ul>
+<li>temporality : present (by default)</li>
+</ul></li>
+</ul></li>
+<li>ciflox 500 mg par 24 heures pour une duree totale de 3 semaines
+<ul>
+<li>Duration : 3 semaines
+<ul>
+<li>temporality : present (by default)</li>
+</ul></li>
+</ul></li>
+<li>a donc beneficie de sa 2ieme perfusion de remicade (200mg) sur 3h</li>
+<li>Duration : 3h
+<ul>
+<li>temporality : present (by default)</li>
+</ul></li>
+<li>a ete traite pendant 2 ans par remicade
+<ul>
+<li>Duration : 2 ans
+<ul>
+<li>temporality : past</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="mode-of-administration" class="section level1">
+<h1>Mode of administration</h1>
+<p>Describes the method for administering the medication.</p>
+<div id="what-should-be-annotated-4" class="section level2">
+<h2>What should be annotated?</h2>
+<p>Text that expresses mode/route of administration, even when it is expressed as part of the medication name or the dosage.</p>
+<p>Includes:</p>
+<p>per os</p>
+<ul>
+<li>intraveineux</li>
+<li>topique</li>
+<li>sublingual</li>
+<li>cutanee</li>
+<li>sous cutanée</li>
+<li>intramusculaire</li>
+<li>perfusion</li>
+<li>creme</li>
+<li>solution buvable</li>
+<li>ophtalmique</li>
+<li>Abbreviations of the above</li>
+</ul>
+</div>
+<div id="how-to-annotate-4" class="section level2">
+<h2>How to annotate?</h2>
+<p>Follow the same basic principles as for annotating duration. If route apply to multiple medication, add a relation for each. Multiple route can be related to one drug name</p>
+<ul>
+<li>ventoline spray : 2 bouffees x4 par jour pendant 4 jours au babyhaler.</li>
+<li>hyperhydratation par voie intraveineuse
+<ul>
+<li>route : intraveineuse</li>
+</ul></li>
+<li>necessitant un traitement par kayexalate et aerosol de ventoline
+<ul>
+<li>route : aerosol</li>
+</ul></li>
+</ul>
+<p>Changes in mode of administration of a drug should be included as separate entries.</p>
+<ul>
+<li>traitement pendant 5 jours par clamoxyl iv puis relais per os
+<ul>
+<li>route : iv</li>
+<li>route : per os</li>
+</ul></li>
+</ul>
+<p>Different ways of referring to the same mode of administration should be included in separate entries.</p>
+<ul>
+<li>nebulisation de ventoline toutes les 6 heures puis relais par chambre d inhalation (baby-haler) le 06/02/2012
+<ul>
+<li>route : nebulisation</li>
+<li>route : chambre d inhalation</li>
+<li>route : baby-haler</li>
+</ul></li>
+</ul>
+<p>Cases where one mode applies to multiple medications need to be handled properly.</p>
+<ul>
+<li>relais par targocid puis orbenine iv jusqu au 24/03/2013
+<ul>
+<li>route : iv</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="condition" class="section level1">
+<h1>Condition</h1>
+<p>Expressions that indicate condition for which the medication is to be given. Such expressions are often conditional proposal and start with a conditional expression such as “si”, “en cas de”, “en fonction de”…</p>
+<div id="what-should-be-annotated-5" class="section level2">
+<h2>What should be annotated ?</h2>
+<p>Condition for which the medication is to be given.</p>
+<p>Includes:</p>
+<ul>
+<li>en cas de fievre</li>
+<li>si besoin</li>
+<li>si veut</li>
+<li>en fonction des ASAT</li>
+</ul>
+</div>
+<div id="how-to-annotate-5" class="section level2">
+<h2>How to annotate ?</h2>
+<p>Always annotate the most informative base adjective phrase or the longest base noun phrase as the condition for the medication. Longest base noun phrase has the form (det* adj* N+ adj*). Longest adjective phrase often occurs as (adj+). Do not include complex phrases, do not include coordinated phrases. Instead, extract from these phrases the base phrase, even when this means you will end up with multiple conditions. A condition can be related to drug name or an event.</p>
+<p>A certainty attribute“conditional” must not be add on the entity concerned by the condition.</p>
+<ul>
+<li>codenfan une dose/poids si besoin maximum 3x par jour
+<ul>
+<li>drug : codenfan</li>
+<li>condition : besoin
+<ul>
+<li>is_condition : codenfan</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>If there are different conditions mentioned for the same medication then include one entry per condition. Add relation with entity for each. In cases where multiple medications are given with the same condition, list the condition with all of the medications and add relation for each.</p>
+<ul>
+<li>il a ete explique aux parents d utiliser l oxygene en cas d inconfort, de paleur ou de gene respiratoire et non en fonction d un chiffre de saturation
+<ul>
+<li>drug : oxygene</li>
+<li>condition : inconfort</li>
+<li>condition : paleur</li>
+<li>condition : gene respiratoire</li>
+<li>condition : chiffre de saturation
+<ul>
+<li>certainty : negated</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>If a condition is composed of multiple sub-conditions (separated by “et”), annotate them together with one entry.</p>
+<ul>
+<li>melatonine 2mg : 1 gelule au coucher si agitation et probleme d endormissement
+<ul>
+<li>condition : si agitation et probleme d endormissement</li>
+</ul></li>
+</ul>
+<p>Different ways of referring to the same condition for medication should be treated as separate conditions. Add relation “is_equiv” between them and to the related entity from the closest one.</p>
+<ul>
+<li>en cas d’anemie aregenerative (hemolyse non mecanique) augmenter les corticoides
+<ul>
+<li>condition : anemie aregenerative</li>
+<li>condition : hemolyse non mecanique</li>
+<li>increase : augmenter
+<ul>
+<li>Arg : corticoides</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="events" class="section level1">
+<h1>8.Events</h1>
+<p>Information on whether the medication is started, stopped, continued, increase or decrease at a defined time. This information is usually expressed in the main verb of the sentence or by a date. Annotate the event indicated by the most precise date, or, if not possible, by the main word related to the medication.</p>
+<div id="what-should-be-annotated-6" class="section level2">
+<h2>What should be annotated?</h2>
+<p>A date of starting, stopping, continuing, increasing or decreasing a medication. If missing, annotate the main word (verb, noun…) highlighting the event such as “mise en route”, “début”, “poursuite”, “relais”…</p>
+</div>
+<div id="possible-relations-from-an-event" class="section level2">
+<h2>Possible relations from an event</h2>
+<p>“Arg” of a medication : links the event to the related medication affected by the event. To an entity. a medication could have multiple events related.</p>
+</div>
+<div id="how-to-annotate-6" class="section level2">
+<h2>How to annotate?</h2>
+<p>Choose from possible values: start, stop, continue, start-stop, increase or decrease.</p>
+<ul>
+<li>Start : main date or word of the medication beginning</li>
+<li>Stop : main date or word of the medication stop</li>
+<li>Start-Stop : unique intake of a medication</li>
+<li>Increase : increase of dosage of a medication already taken</li>
+<li>Decrease : decrease of dosage of a medication already taken</li>
+<li>Continue : main date or word of the medication pursuit or with no obvious change of dosage</li>
+</ul>
+<p>By default, “present” is the temporal attribute of Events. It can be “past”, “present” or “future”. It must be defined according to if the event is before, during or after current hospitalization.</p>
+<p>If there are two Events on the same expression (even if both of them are the same, for example 2 start events), you should annotate the expression twice with an event “Start”</p>
+</div>
+<div id="example" class="section level2">
+<h2>Example :</h2>
+<ul>
+<li>Pas de modification de la corticothérapie
+<ul>
+<li>continue : Pas de modification
+<ul>
+<li>Arg : corticothérapie</li>
+</ul></li>
+</ul></li>
+<li>meningocoque a + c : 11/07.
+<ul>
+<li>start-stop : 11/07
+<ul>
+<li>Arg : meningocoque a + c</li>
+<li>Temporality : past</li>
+</ul></li>
+</ul></li>
+<li>antibiotherapie debutee lors de la chirurgie, a arrete a j5
+<ul>
+<li>start : debuter
+<ul>
+<li>Arg : antibiotherapie</li>
+</ul></li>
+<li>stop : a j5
+<ul>
+<li>Arg : antibiotherapie</li>
+</ul></li>
+</ul></li>
+<li>arret du nubain le 14/12/2010
+<ul>
+<li>stop : 14/12/2010
+<ul>
+<li>Arg : nubain</li>
+<li>Temporality : past</li>
+</ul></li>
+</ul></li>
+<li>augmentation des doses de morphine
+<ul>
+<li>increase : augmentation
+<ul>
+<li>No date, so main word is “augmentation”</li>
+<li>Arg : morphine</li>
+<li>Temporality : present (by default)</li>
+</ul></li>
+</ul></li>
+<li>poursuite de l’hydrea
+<ul>
+<li>continue : poursuite
+<ul>
+<li>Arg : hydrea</li>
+</ul></li>
+</ul></li>
+<li>janvier 2006 : nouveau syndrome thoracique aigu, mise sous hydrea.
+<ul>
+<li>start : janvier 2006
+<ul>
+<li>Arg : hydrea</li>
+<li>Temporality : past</li>
+</ul></li>
+</ul></li>
+<li>compte-rendu d hospitalisation de jour du 27/12/2012 pour sa 16ieme perfusion de remicade
+<ul>
+<li>start-stop : 27/12/2012
+<ul>
+<li>Arg : remicade</li>
+<li>Temporality : present</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Switching one medication for another includes two events on the same expression. One medication is stopped and another one is started.</p>
+<ul>
+<li>relais du traitement avk pour un traitement par heparine en sous cutanee dans la phase aigue
+<ul>
+<li>stop : relais
+<ul>
+<li>Arg : avk</li>
+<li>Temporality : present</li>
+</ul></li>
+<li>start : relais
+<ul>
+<li>Arg : heparine</li>
+<li>Temporality : present</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>If there are two events for an entity, include two separate entries. Make each entry as specific and complete as possible. If there are multiple medications for one event, include separate entries for each. Add a relation for each.</p>
+<ul>
+<li>la pancytopenie s est compliquee apres la chimiotherapie d un sepsis a escherichia coli resistant a la tazocilline (tazocilline* depuis le 6 septembre 2010) traite par fortum a partir du 15 septembre 2010
+<ul>
+<li>start : 6 septembre 2010
+<ul>
+<li>Arg : tazocilline</li>
+<li>Temporalité : present</li>
+</ul></li>
+<li>stop : 15 septembre 2010
+<ul>
+<li>Arg : tazocilline</li>
+<li>Temporalité : present</li>
+</ul></li>
+<li>start : 15 septembre 2010
+<ul>
+<li>Arg : fortum</li>
+<li>Temporalité : present</li>
+</ul></li>
+</ul></li>
+<li>traitement par endoxan avant de debuter un traitement par mabthera fludarabine endoxan etant donne la lymphocytose majeure et la presence d anemie hemolytique
+<ul>
+<li>start : debuter
+<ul>
+<li>Arg : mabthera</li>
+</ul></li>
+<li>start : debuter
+<ul>
+<li>Arg : fludarabine</li>
+</ul></li>
+<li>start : debuter
+<ul>
+<li>Arg : endoxan</li>
+</ul></li>
+</ul></li>
+<li>debut du traitement par ambisome le 29 mars 2014 a 3 mg/kg jusqu au 2 avril puis 5 mg/kg jusqu au 7 avril, puis 7,5 mg/kg jusqu au 30 avril
+<ul>
+<li>start : 29 mars 2014
+<ul>
+<li>Arg : ambisome</li>
+</ul></li>
+<li>increase : 2 avril
+<ul>
+<li>Arg : ambisome</li>
+</ul></li>
+<li>increase : 7 avril
+<ul>
+<li>Arg : ambisome</li>
+</ul></li>
+<li>stop : 30 avril
+<ul>
+<li>Arg : ambisome</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="attributes" class="section level1">
+<h1>Attributes</h1>
+<p>Information that indicates when events are to take place, and whether they are factual, suggested, conditional or uncertain</p>
+<div id="temporal-attributes" class="section level2">
+<h2>Temporal Attributes</h2>
+<p>Information about whether the medication was administered in the past, is being administered currently, or will be administered in the future, to the extent that this information is expressed in the tense of the verbs and auxiliary verbs used to express events. One temporal attributes for each event.</p>
+<div id="how-to-mark" class="section level3">
+<h3>How to mark ?</h3>
+<p>Events and duration can be marked.</p>
+<p>Choose from possible values for each event: past, present, future. The default temporal attributes is “present”.</p>
+<ul>
+<li>Past: The event occurred before current hospitalization.</li>
+<li>Present: The event occurred during current hospitalization.</li>
+<li>Future: The event occurr after current hospitalization.</li>
+</ul>
+<p>See Duration and Events for examples</p>
+</div>
+</div>
+<div id="certainty-attributes" class="section level2">
+<h2>Certainty attributes</h2>
+<p>Information on whether the event occurs. Certainty can be expressed by uncertainty words, e.g., “suggested”, or via modals, e.g., “should” indicates suggestion.</p>
+<div id="how-to-mark-1" class="section level3">
+<h3>How to mark?</h3>
+<p>Choose from possible values: conditional, suggestion, factual, uncertain or negated. The default Certainty attributes is “factual”</p>
+<ul>
+<li>Conditional: The entity occurs only under certain conditions as mentioned in the text.</li>
+<li>Suggestion: The entity is/was suggested and it is not dependent on a condition.</li>
+<li>Factual: The entity is not marked as conditional or suggestion, it is factual. This is the default value for certainty.</li>
+<li>Uncertain : The entity does/did not occur for sure.</li>
+<li>Negated : The entity does/did not occur, e.g., a medication is not given</li>
+<li>Contraindicated : the medication is mentioned as a contraindication</li>
+</ul>
+<p>See previous chapter for examples</p>
+</div>
+</div>
+</div>
+<div id="prescription-pattern" class="section level1">
+<h1>Prescription Pattern</h1>
+<p>All Medications and their attribute listed in discharge summary and given (present, past or future) or contraindicated to an experiencer.</p>
+<div id="what-should-be-annotated-7" class="section level2">
+<h2>What should be annotated?</h2>
+<p>There is two kind of pattern : medication prescription (medication blob) and ordonnance prescription (ordonnance blob). A drug (and its equivalent) and all of its attributes must be annoted such as medication prescription. A sentence with multiple drugs and their attribute must be annoted such as ordonnance prescription. if an attributes is related to multiple drugs, it must not be in a medication prescription but only in ordonnance prescription.</p>
+</div>
+<div id="how-to-annotate-7" class="section level2">
+<h2>How to annotate ?</h2>
+<p>From the first word (medication, attributes or event) until the last. Event type must be applied on the Prescription patterns related. if a drug have no attributes, do not do a prescription pattern.</p>
+<p>Examples :</p>
+<ul>
+<li>doliprane 1 dose poids*4/ jour si douleurs (paracetamol 1 boite)
+<ul>
+<li>drug : doliprane</li>
+<li>drug : paracetamol</li>
+<li>dose : 1 dose poids</li>
+<li>frequency : 4/jour</li>
+<li>condition : douleurs</li>
+<li>medication_blob : doliprane 1 dose poids*4/ jour si douleurs (paracetamol</li>
+</ul></li>
+</ul>
+<p>if an attribute or event is related to multiple drugs, include it only in the “ordonnance_blob” pattern which will include the drugs. Here “toujours” is related to the ordonnance.</p>
+<ul>
+<li>je ne modifie pas son traitement, soit toujours lasilix 20 mg/j, atacand 8 mg, ezetrol , calciparat 1 g, allopurinol 300 mg et crestor 5.
+<ul>
+<li>event : continue
+<ul>
+<li>Arg : toujours</li>
+</ul></li>
+<li>drug : lasilix</li>
+<li>dose : 20 mg</li>
+<li>frequency : /j</li>
+<li>medication_blob : lasilix 20 mg/j</li>
+<li>drug : atacand</li>
+<li>dose : 8 mg</li>
+<li>medication_blob : latacand 8 mg</li>
+<li>drug : ezetrol</li>
+<li>drug : calciparat</li>
+<li>dose : 1 g</li>
+<li>medication_blob : calciparat 1 g</li>
+<li>drug : allopurinol</li>
+<li>dose : 300 mg</li>
+<li>medication_blob : allopurinol 300 mg</li>
+<li>drug : crestor</li>
+<li>dose : 5</li>
+<li>medication_blob: crestor 5</li>
+<li>ordonnance_blob : toujours lasilix 20 mg/j, atacand 8 mg, ezetrol , calciparat 1 g, allopurinol 300 mg et crestor 5</li>
+</ul></li>
+</ul>
+<div id="informations-offset" class="section level3">
+<h3>Informations Offset</h3>
+<p>The informations’ offsets will be generated automatically by “brat”. It starts by 0 for the first character of the discharge summary. Each character, even space, counts as one character. Return to the line count as 2 characters.</p>
+<p>Each entry consist of one annotation (entity or relation) and will be printed on its own line with its offset. All annotations follow the same basic structure: each annotation is given an ID that appears first on the line, separated from the rest of the annotation by a single TAB character. The rest of the structure varies by annotation type.</p>
+<div id="for-entity-the-line-follows-those-example" class="section level4">
+<h4>For entity, the line follows those example :</h4>
+<p>T# “type of entity” start stop “Entity”</p>
+<p>T1 drugs 1760 1770 solumedrol</p>
+<p>T2 dose 1771 1777 180 mg</p>
+</div>
+<div id="entities-annotated-can-be-fragmented-in-multiple-part-in-this-document-it-is-represented-as-but-not-in-the-offset.-the-line-follows-the-format" class="section level4">
+<h4>Entities annotated can be fragmented in multiple part (in this document, it is represented as […] but not in the offset). The line follows the format :</h4>
+<p>T# “type of entity” start1 stop1;start2 stop2 “Entity”</p>
+</div>
+<div id="for-relation-between-2-arguments-the-line-follows-the-format" class="section level4">
+<h4>For relation between 2 arguments , the line follows the format ;</h4>
+<p>R# “type of relation” Arg1:fromID Arg2:toID</p>
+<p>R1 is_dosage Arg1:T2 Arg2:T1</p>
+</div>
+<div id="each-event-have-at-list-2-lines-one-for-the-highlighting-word-like-an-entity-and-one-for-each-arg-relation" class="section level4">
+<h4>Each event have at list 2 lines : one for the highlighting word (like an entity) and one for each “Arg” relation :</h4>
+<p>E# “Event type”:“Event ID” Arg:toID</p>
+<p>T100 start 3915 3927 introduction E1 start:T100 Arg:T99</p>
+</div>
+<div id="attribute-follows-the-format" class="section level4">
+<h4>Attribute follows the format :</h4>
+<p>A# “Attribute class” “ID of Entity marked” “Attribute name”</p>
+<p>A1 certainty T109 uncertain</p>
+</div>
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Pontus Stenetorp, Sampo Pyysalo, Goran Topić, Tomoko Ohta, Sophia Ananiadou and Jun’ichi Tsujii (2012). brat: a Web-based Tool for NLP-Assisted Text Annotation. In <em>Proceedings of the Demonstrations Session at EACL 2012</em>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

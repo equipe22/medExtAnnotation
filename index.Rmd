@@ -1,5 +1,5 @@
 ---
-title: "Annotation guideline for medication extraction from french electronic health records"
+title: "Medication extraction annotation guide"
 author: "Jouffroy Jordan, Feldman Sarah and Neuraz Antoine"
 date: "6/6/2019"
 ---

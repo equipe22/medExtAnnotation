@@ -3,10 +3,8 @@ output_dir: "docs"
 navbar:
   title: "Medication extraction annotation guide"
   left:
-  - text: "Home"
-   href: index.html
-  - text: "Annotation guide"
-   href: annotation_guide.html
+    - text: "Annotation guide"
+      href: index.html
 output:
   html_document:
- theme: cosmo
+    theme: cosmo
